@@ -18,12 +18,14 @@
   },
   "scripts": {
     "ccsseraphini": "node ./bin/cli.js",
-    "lint": "eslint '**/*.js'"
+    "lint": "eslint '**/*.js'",
+    "test": "jest"
   },
   "dependencies": {
     "open": "8.4.0"
   },
   "devDependencies": {
-    "eslint": "8.7.0"
+    "eslint": "8.7.0",
+    "jest": "27.4.7"
   }
 }
