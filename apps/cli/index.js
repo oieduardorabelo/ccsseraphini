@@ -60,27 +60,33 @@ For more information try ${color('--help', 'green')} or ${color(
 async function main() {
   const message = process.argv[2];
 
-  if (message === undefined || message === '-h' || message === '--help') {
-    showHelp();
-  } else if (message === '-v' || message === '--version') {
-    showVersion();
-  } else if (
-    (message.charAt(0) === '-' && message !== '-h') ||
-    (message.charAt(0) === '-' && message !== '--help') ||
-    (message.charAt(0) === '-' && message !== '-v') ||
-    (message.charAt(0) === '-' && message !== '--version')
-  ) {
-    showErrorMsg(message);
-  } else {
-    return await open(
-      `https://twitter.com/intent/tweet?text=${message}%0Acc%20%40sseraphini`,
-    );
+  const validOptions = ['-v', '--version', '-h', ' --help'];
+
+  if (typeof message === 'undefined') {
+    return showHelp();
+  }
+
+  if (message.charAt(0) === '-' && !validOptions.includes(message)) {
+    return showErrorMessage(message);
+  }
+  switch (message.toLowerCase()) {
+    case '-v':
+    case '--version':
+      showVersion();
+      break;
+
+    case '-h':
+    case '--help':
+      showHelp();
+      break;
+
+    default:
+      return await open(
+        `https://twitter.com/intent/tweet?text=${message}%0Acc%20%40sseraphini`,
+      );
   }
 }
 
 module.exports = {
-  color,
-  showHelp,
-  showVersion,
-  showErrorMessage,
+  main,
 };
